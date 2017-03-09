@@ -1,8 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-public Texture2D backgroundImg;
-public GUISkin skin;
+
 
 public class Login : MonoBehaviour {
 #region variables
