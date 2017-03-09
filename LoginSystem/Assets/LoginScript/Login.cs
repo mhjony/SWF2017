@@ -31,7 +31,7 @@ public class Login : MonoBehaviour {
 	} // End start method
 
 	//Main GUI Function
-	void onGUI(){
+	void OnGUI(){
 		if (CurrentMenu == "CreateAccount") {
 			LoginGUI ();
 		} else if (CurrentMenu == "CreateAccount") {
