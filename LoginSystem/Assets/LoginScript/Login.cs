@@ -20,6 +20,7 @@ public class Login : MonoBehaviour {
     private string ConfirmEmail = "";
     private string CEmail = "";
     private string CPassword = "";
+    
 
     //GuI Test section
     public float X;
@@ -97,7 +98,7 @@ public class Login : MonoBehaviour {
         {
             if(ConfirmPass == CPassword && ConfirmEmail == CEmail)
             {
-                //StartCoroutine();
+                StartCoroutine("CreateAccount");
             }
             else
             {
@@ -111,7 +112,35 @@ public class Login : MonoBehaviour {
             CurrentMenu = "Login";
         } //End button
     }//End create account GUI
+    #endregion
+
+    #region coruoutine
+    //Actually create account
+    IEnumerator CreateAccount() {
+        WWWForm Form = new WWWForm();
+        Form.AddField("Email",CEmail);
+        Form.AddField("Password",CPassword);
+        WWW CreateAccount = new WWW(CreateAcountUrl, Form);
+        //wait for php to send something back to unity
+        yield return CreateAccountWWW;
+        if (CreateAccountWWW.error != null) {
+            Debug.LogError("Cannot connect to Account Creation");
+        }
+        else
+        {
+            string CreateAccountReturn = CreateAccountWWW.text;
+            if (CreateAccountReturn == "Success")
+            {
+                Debug.Log("Success: Account created");
+                CurrentMenu = "Login";
+            }
+        }// End else
+
+
+    } //End create account
+
+
 #endregion
-	
+
 
 }//End class
