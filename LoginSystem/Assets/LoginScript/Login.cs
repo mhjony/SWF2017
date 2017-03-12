@@ -116,19 +116,21 @@ public class Login : MonoBehaviour {
 
     #region coruoutine
     //Actually create account
-    IEnumerator CreateAccount(WWW _w) {
+    IEnumerator CreateAccount()
+    {
         WWWForm Form = new WWWForm();
-        Form.AddField("Email",CEmail);
-        Form.AddField("Password",CPassword);
+        Form.AddField("Email", CEmail);
+        Form.AddField("Password", CPassword);
         WWW CreateAccount = new WWW(CreateAcountUrl, Form);
         //wait for php to send something back to unity
-        yield return _w;
-        if (_w.error != null) {
+        yield return CreateAccount;
+        if (CreateAccount.error != null)
+        {
             Debug.LogError("Cannot connect to Account Creation");
         }
         else
         {
-            string CreateAccountReturn = _w.text;
+            string CreateAccountReturn = CreateAccount.text;
             if (CreateAccountReturn == "Success")
             {
                 Debug.Log("Success: Account created");
@@ -140,7 +142,7 @@ public class Login : MonoBehaviour {
     } //End create account
 
 
-#endregion
+    #endregion
 
 
 }//End class
