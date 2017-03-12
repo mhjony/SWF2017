@@ -14,7 +14,7 @@ public class Login : MonoBehaviour {
 
 
 	//Private Variable
-	private string CreateAcountUrl = "";
+	private string CreateAcountUrl = "http://127.0.0.1/CreateAccountT.php";
 	private string LoginUrl = "";
     private string ConfirmPass = "";
     private string ConfirmEmail = "";
@@ -82,11 +82,11 @@ public class Login : MonoBehaviour {
         GUI.Label(new Rect(260, 90, 50, 20), "Email:");
         CEmail = GUI.TextField(new Rect(300, 90, 160, 20), CEmail);
 
-        GUI.Label(new Rect(235, 120, 75, 20), "Password:");
-        CPassword = GUI.TextField(new Rect(300, 120, 160, 20), CPassword);
-
-        GUI.Label(new Rect(210, 150, 100, 20), "Confirm Email:");
-        ConfirmEmail = GUI.TextField(new Rect(300, 150, 160, 20), ConfirmEmail);
+        GUI.Label(new Rect(210, 120, 120, 20), "Confirm Email:");
+        ConfirmEmail = GUI.TextField(new Rect(300, 120, 160, 20), ConfirmEmail);
+        
+        GUI.Label(new Rect(235, 150, 100, 20), "Password: ");
+        CPassword = GUI.TextField(new Rect(300, 150, 160, 20), CPassword);
 
         GUI.Label(new Rect(185, 180, 130, 20), "Confirm Password:");
         ConfirmPass = GUI.TextField(new Rect(300, 180, 160, 20), ConfirmPass);
@@ -116,19 +116,19 @@ public class Login : MonoBehaviour {
 
     #region coruoutine
     //Actually create account
-    IEnumerator CreateAccount() {
+    IEnumerator CreateAccount(WWW _w) {
         WWWForm Form = new WWWForm();
         Form.AddField("Email",CEmail);
         Form.AddField("Password",CPassword);
         WWW CreateAccount = new WWW(CreateAcountUrl, Form);
         //wait for php to send something back to unity
-        yield return CreateAccountWWW;
-        if (CreateAccountWWW.error != null) {
+        yield return _w;
+        if (_w.error != null) {
             Debug.LogError("Cannot connect to Account Creation");
         }
         else
         {
-            string CreateAccountReturn = CreateAccountWWW.text;
+            string CreateAccountReturn = _w.text;
             if (CreateAccountReturn == "Success")
             {
                 Debug.Log("Success: Account created");
