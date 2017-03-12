@@ -15,7 +15,7 @@ public class Login : MonoBehaviour {
 
 	//Private Variable
 	private string CreateAcountUrl = "http://127.0.0.1/CreateAccountT.php";
-	private string LoginUrl = "";
+	private string LoginUrl = "http://127.0.0.1/LoginAccountT.php";
     private string ConfirmPass = "";
     private string ConfirmEmail = "";
     private string CEmail = "";
@@ -60,6 +60,7 @@ public class Login : MonoBehaviour {
         
         if (GUI.Button(new Rect(350,210,100,25), "Log In"))
         {
+            StartCoroutine(LoginAccount());
             
         } //End button
         //Email
@@ -142,7 +143,48 @@ public class Login : MonoBehaviour {
     } //End create account
 
 
-    #endregion
 
+   // Actual log in
+    IEnumerator LoginAccount()
+    {
+        //Add out values that will go into the php script
+        WWWForm Form = new WWWForm();
+        //Make sure the email and password are spell the very same in the php script
+        Form.AddField("Email", Email);
+        Form.AddField("Password", Password);
+        //Connect to the url
+        WWW LoginAccountWWW = new WWW(LoginUrl, Form);
+        yield return LoginAccountWWW;
+        if(LoginAccountWWW.error != null)
+        {
+            Debug.LogError("Can't connect to the log in");
+        }
+        else
+        {
+            string LogText = LoginAccountWWW.text;
+            Debug.Log(LogText);
+            string[] LogTextSplit = LogText.Split(':');
+            if(LogTextSplit[0] == "0")
+            {
+                if(LogTextSplit[1] == "Success")
+                {
+                    Application.LoadLevel("CharacterCreation");
+                }
+
+            }
+            else
+            {
+                if (LogTextSplit[1] == "Success")
+                {
+                    Application.LoadLevel("CharacterSelection");
+                }
+            }
+
+        }
+
+
+    } // End login
+
+    #endregion
 
 }//End class
