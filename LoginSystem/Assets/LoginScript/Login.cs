@@ -148,6 +148,7 @@ public class Login : MonoBehaviour {
     IEnumerator LoginAccount()
     {
         //Add out values that will go into the php script
+        
         WWWForm Form = new WWWForm();
         //Make sure the email and password are spell the very same in the php script
         Form.AddField("Email", Email);
