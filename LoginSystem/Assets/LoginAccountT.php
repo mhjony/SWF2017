@@ -7,38 +7,47 @@ $PasswordP = "";
 mysql_connect($Hostname, $User, $PasswordP) or die("Can't connect into database");
 mysql_select_db($DBName) or die("Can't connect into database");
 
-$Email = $_POST['Email'];
-$Password = $_POST['Password'];
+$Email = $_REQUEST["Email"];
+$Password = $_REQUEST["Password"];
 
-if (!$Email || !$Password) {
+if (!$Email || !$Password) 
+	{
 	# code...
 	echo "Login or user can't be empty";
-}else{
-	if(isset($_POST["Email"], $_POST["Password"])) 
-    {     
-
-        $Email = $_POST["Email"]; 
-        $Password = $_POST["Password"]; 
-
-        $result1 = mysql_query("SELECT * FROM accounts WHERE Email = '".$Email."' AND  Password = '".$Password."'") or die(mysql_error());
-
-       $check_username = "";
-       $check_password = "";
-
-       while($row=mysql_fetch_assoc($result1))
+	}
+	else
+	{
+	$SQL = "SELECT *FROM accounts WHERE Email = '" . $Email . "'";
+	$result_id = @mysql_query($SQL) or die("Database Error");
+	$total = mysql_num_rows($result_id);
+	if ($total) 
+	{
+		# code...
+		$datas = @mysql_fetch_array($result_id);
+		if (strcmp($Password, $datas["Password"])) 
 		{
-			$check_username=$row['Email'];
-			$check_password=$row['Password'];
+			# code...
+			$sql2 = "SELECT Characters FROM accounts WHERE Email = '" . $Email . "'";
+			$result_id2 = @mysql_query($sql2) or die("Database error!");
+			while ($row = mysql_fetch_array($result_id2)) 
+			{
+				# code...
+				echo $row['Characters'];
+				echo ":";
+				echo "Sucess";
+			}
+
 		}
-
-			if($Email == $check_username && $Password == $check_password){
-			echo "Matches.";
-			}
-
-			else{
-				echo "No match.";
-			}
-}
+		else
+		{
+			echo "Wrong Password";
+		}
+	}
+	
+	else
+	{
+		echo "Name Does not exist";
+	}
 }
 
 

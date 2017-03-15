@@ -11,10 +11,11 @@ public class Login : MonoBehaviour {
 	
     //public variable
 	public string CurrentMenu = "Login";
+    
 
 
-	//Private Variable
-	private string CreateAcountUrl = "http://127.0.0.1/CreateAccountT.php";
+    //Private Variable
+    private string CreateAcountUrl = "http://127.0.0.1/CreateAccountT.php";
 	private string LoginUrl = "http://127.0.0.1/LoginAccountT.php";
     private string ConfirmPass = "";
     private string ConfirmEmail = "";
@@ -68,7 +69,7 @@ public class Login : MonoBehaviour {
         Email = GUI.TextField(new Rect(270, 110, 170, 20), Email);
         //Password
         GUI.Label(new Rect(205, 150, 75, 20), "Password:");
-        Password = GUI.TextField(new Rect(270, 150, 170, 20), Password);
+        Password = GUI.PasswordField(new Rect(270, 150, 170, 20), Password, "*"[0],25);
 
 
     }//End Login GUI
