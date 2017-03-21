@@ -11,7 +11,9 @@ public class Login : MonoBehaviour {
 	
     //public variable
 	public string CurrentMenu = "Login";
-    
+      
+
+
 
 
     //Private Variable
@@ -21,6 +23,8 @@ public class Login : MonoBehaviour {
     private string ConfirmEmail = "";
     private string CEmail = "";
     private string CPassword = "";
+   // private Rect windowRect = new Rect(0,0, Screen.width,Screen.height);
+
     
 
     //GuI Test section
@@ -34,12 +38,18 @@ public class Login : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		
-	} // End start method
+        
+        Screen.orientation = ScreenOrientation.LandscapeLeft;
+        
+
+    } // End start method
 
 	//Main GUI Function
 	void OnGUI(){
-		if (CurrentMenu == "Login") {
+        
+
+
+        if (CurrentMenu == "Login") {
 			LoginGUI ();
 		} else if (CurrentMenu == "CreateAccount") {
 			CreateAccountGUI ();
@@ -50,26 +60,40 @@ public class Login : MonoBehaviour {
 #region custon methods
 	//This method will login the accounts
 	void LoginGUI(){
+        
+
+        GUIStyle textFont = new GUIStyle();
+        textFont.fontSize = 35;
+
+        
+        textFont.normal.textColor = Color.white;
+
+
+        GUI.skin.button.fontSize = 30;
+
+        GUI.skin.textField.fontSize = 30;
+        GUI.skin.box.fontSize = 35;
         //create box to simulate window
-		GUI.Box(new Rect(180, 50, 300, 220), "Log In");
+        //float windowaspect = (float)Screen.width / (float)Screen.height;
+        GUI.Box(new Rect(180, 100, (Screen.width / 4) + 600, (Screen.height / 4) + 320), "Log In");
         //create account button and login button.
         //Open create account window 
-        if (GUI.Button(new Rect(230, 210, 100, 25), "Create Account"))
+        if (GUI.Button(new Rect(420, 440, 250, 80), "Create Account"))
         {
             CurrentMenu = "CreateAccount";
         }
         
-        if (GUI.Button(new Rect(350,210,100,25), "Log In"))
+        if (GUI.Button(new Rect(740,440, 250,80), "Log In"))
         {
             StartCoroutine(LoginAccount());
             
         } //End button
         //Email
-        GUI.Label(new Rect(230, 110, 50, 20), "Email:");
-        Email = GUI.TextField(new Rect(270, 110, 170, 20), Email);
+        GUI.Label(new Rect(220, 220, 250, 60), "Email:", textFont);
+        Email = GUI.TextField(new Rect(420, 190, 570, 80), Email);
         //Password
-        GUI.Label(new Rect(205, 150, 75, 20), "Password:");
-        Password = GUI.PasswordField(new Rect(270, 150, 170, 20), Password, "*"[0],25);
+        GUI.Label(new Rect(220, 340, 250, 60), "Password:", textFont);
+        Password = GUI.PasswordField(new Rect(420, 320, 570, 80), Password, "*"[0],25);
 
 
     }//End Login GUI
@@ -77,26 +101,38 @@ public class Login : MonoBehaviour {
 
 	// This method will be the GUI for creating the account
 	void CreateAccountGUI(){
+
+        GUIStyle textFont = new GUIStyle();
+        textFont.fontSize = 25;
+        
+        textFont.normal.textColor = Color.white;
+        
+        GUI.skin.button.fontSize = 25;
+
+        GUI.skin.textField.fontSize = 30;
+        GUI.skin.box.fontSize = 25;
+
         //create box to simulate window
-        GUI.Box(new Rect(180, 50, 300, 220), "Create Account");
-        
+        GUI.Box(new Rect(180, 105, (Screen.width / 4) + 600, (Screen.height / 4) + 320), "Create your account");
+        //GUI.Box(new Rect(180, 50, 300, 220), "Create Account");
+
         //Email and password , plus confirmation
-        GUI.Label(new Rect(260, 90, 50, 20), "Email:");
-        CEmail = GUI.TextField(new Rect(300, 90, 160, 20), CEmail);
+        GUI.Label(new Rect(200, 180, 100, 50), "Email or Name:", textFont);
+        CEmail = GUI.TextField(new Rect(530, 160, 480, 65), CEmail);
 
-        GUI.Label(new Rect(210, 120, 120, 20), "Confirm Email:");
-        ConfirmEmail = GUI.TextField(new Rect(300, 120, 160, 20), ConfirmEmail);
+        GUI.Label(new Rect(200, 260, 100, 50), "Confirm Name or Email:", textFont);
+        ConfirmEmail = GUI.TextField(new Rect(530, 240, 480, 65), ConfirmEmail);
         
-        GUI.Label(new Rect(235, 150, 100, 20), "Password: ");
-        CPassword = GUI.TextField(new Rect(300, 150, 160, 20), CPassword);
+        GUI.Label(new Rect(200, 350, 100, 50), "Password: ", textFont);
+        CPassword = GUI.PasswordField(new Rect(530, 330, 480, 65), CPassword, "*"[0], 25);
 
-        GUI.Label(new Rect(185, 180, 130, 20), "Confirm Password:");
-        ConfirmPass = GUI.TextField(new Rect(300, 180, 160, 20), ConfirmPass);
+        GUI.Label(new Rect(200, 440, 100, 50), "Confirm Password:", textFont);
+        ConfirmPass = GUI.PasswordField(new Rect(530, 420, 480, 65), ConfirmPass, "*"[0], 25);
         //create random int field for bot protection
 
         //create account button and login button.
         //Open create account window 
-        if (GUI.Button(new Rect(230, 230, 100, 25), "Create Account"))
+        if (GUI.Button(new Rect(525, 515, 250, 50), "Create Account"))
         {
             if(ConfirmPass == CPassword && ConfirmEmail == CEmail)
             {
@@ -109,7 +145,7 @@ public class Login : MonoBehaviour {
             
         } //End create account
         //Log user In 
-        if (GUI.Button(new Rect(350, 230, 100, 25), "Exit"))
+        if (GUI.Button(new Rect(815, 515, 190, 50), "Exit"))
         {
             CurrentMenu = "Login";
         } //End button
