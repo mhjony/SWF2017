@@ -21,7 +21,7 @@ if (!$Email || !$Password) {
 	$Result = @mysql_query($SQL) or die("DB Error");
 	$Total = mysql_num_rows($Result);
 	if ($Total == 0) {
-		$insert = "INSERT INTO 'accounts' ('Email', 'Password') VALUES  ('" . $Email ."', MD5('". $Password ."'))";
+		$insert = "INSERT INTO 'accounts' ('Email', 'Password') VALUES  ('" . $Email ."', '". $Password ."')";
 		$SQL1 = mysql_query($insert);
 		echo "Success";
 	}else{
